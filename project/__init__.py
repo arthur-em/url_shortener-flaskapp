@@ -5,6 +5,7 @@ import logging
 from flask.logging import default_handler
 import os
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import LoginManager
 
 
 #######################
@@ -15,6 +16,8 @@ from flask_sqlalchemy import SQLAlchemy
 # but without any arguments passed in. These instances are not
 # attached to the Flask application at this point.
 db = SQLAlchemy()
+login = LoginManager()
+login.login_view = "users.login"
 
 
 
@@ -46,15 +49,15 @@ def initialize_extensions(app):
     db.init_app(app)
     # db_migration.init_app(app, db, render_as_batch=True)
     # csrf_protection.init_app(app)
-    # login.init_app(app)
+    login.init_app(app)
     # mail.init_app(app)
 
-    # # Flask-Login configuration
-    # from project.models import User
+    # Flask-Login configuration
+    from project.models import User
 
-    # @login.user_loader
-    # def load_user(user_id):
-    #     return User.query.get(int(user_id))
+    @login.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
 def register_blueprints(app):
     # Import the blueprints

@@ -1,4 +1,5 @@
 import os
+from datetime import timedelta
 
 
 # Determine the folder of the top-level directory of this project
@@ -13,6 +14,7 @@ class Config(object):
     SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
                                         default=f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
+    REMEMBER_COOKIE_DURATION = timedelta(days=14)
 
 
 class ProductionConfig(Config):

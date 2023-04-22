@@ -15,16 +15,32 @@
 
 <body>
     <nav class="navbar navbar-expand-md navbar-light bg-light">
-        <a class="navbar-brand" href="{{ url_for('urls.index')}}">URLShortener</a>
+        <a class="navbar-brand" href="{{ url_for('urls.index')}}">URL Shortener</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
             aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
+                {% if current_user.is_authenticated %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">About</a>
+                    <a class="nav-link" href="{{ url_for('urls.index')}}">Shorten URL</a>
                 </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('users.user_profile')}}">Profile</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('users.logout')}}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('users.register')}}">Register</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ url_for('users.login')}}">Login</a>
+                </li>
+                {% endif %}
+
             </ul>
         </div>
     </nav>

@@ -14,6 +14,13 @@ class Url(db.Model):
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     original_url = db.Column(db.String, nullable=False)
     clicks = db.Column(db.Integer, nullable=False, default=0)
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+
+    # def __init__(self, created, original_url, clicks, user_id):
+    #     self.created = created
+    #     self.original_url = original_url
+    #     self.clicks = clicks
+    #     self.user_id = user_id
 
 
 class User(db.Model):
@@ -26,6 +33,7 @@ class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String, unique=True)
     password_hashed = db.Column(db.String(128))
+    urls = db.relationship('Url', backref='user', lazy='dynamic')
 
     def __init__(self, email, password_plaintext):
         self.email = email

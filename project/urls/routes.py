@@ -7,6 +7,7 @@ from flask import current_app, render_template, request, session, flash, redirec
 from project.models import Url
 from project import db
 from urllib.parse import urlparse
+from flask_login import login_required
 
 # from pydantic import BaseModel, validator, ValidationError
 
@@ -58,3 +59,10 @@ def url_redirect(id):
     else:
         flash('Invalid URL')
         return redirect(url_for('urls.index'))
+
+
+@urls_blueprint.route('/stats')
+@login_required
+def stats():
+    urls = Url.query.order_by(Url.id).all()
+    return render_template('urls/stats.html', urls=urls)

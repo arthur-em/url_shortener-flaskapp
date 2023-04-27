@@ -87,9 +87,3 @@ def logout():
 @login_required
 def user_profile():
     return render_template('users/profile.html')
-
-
-@users_blueprint.route('/stats')
-@login_required
-def stats():
-    return render_template('users/stats.html')

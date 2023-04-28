@@ -24,7 +24,7 @@
             <ul class="navbar-nav">
                 {% if current_user.is_authenticated %}
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for('urls.index')}}">Shorten URL</a>
+                    <a class="nav-link" href="{{ url_for('urls.shorten_url')}}">Shorten URL</a>
                 </li>
                 <li class="nav-item active">
                     <a class="nav-link" href="{{ url_for('users.user_profile')}}">Profile</a>

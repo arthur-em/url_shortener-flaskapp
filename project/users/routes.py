@@ -39,7 +39,7 @@ def login():
         flash('Already logged in!')
         current_app.logger.info(
             f'Duplicate login attempt by user: {current_user.email}')
-        return redirect(url_for('urls.index'))
+        return redirect(url_for('urls.shorten_url'))
 
     form = LoginForm()
 

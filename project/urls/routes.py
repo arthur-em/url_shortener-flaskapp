@@ -12,8 +12,14 @@ from flask_login import login_required
 # from pydantic import BaseModel, validator, ValidationError
 
 
-@urls_blueprint.route("/", methods=("GET", "POST"))
+@urls_blueprint.route("/")
 def index():
+    return render_template('urls/index.html')
+
+
+@urls_blueprint.route("/shortern_url", methods=("GET", "POST"))
+@login_required
+def shorten_url():
     hashids = Hashids(min_length=4, salt=current_app.config['SECRET_KEY'])
 
     if request.method == 'POST':
@@ -35,9 +41,9 @@ def index():
         hashid = hashids.encode(url_id)
         short_url = request.host_url + hashid
 
-        return render_template('urls/index.html', short_url=short_url)
+        return render_template('urls/shorten_url.html', short_url=short_url)
 
-    return render_template('urls/index.html')
+    return render_template('urls/shorten_url.html')
 
 
 @urls_blueprint.route('/<id>')

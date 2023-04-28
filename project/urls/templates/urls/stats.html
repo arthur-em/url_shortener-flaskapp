@@ -5,29 +5,28 @@
 {% endblock %} -->
 
 {% block content %}
-<div class="stocks-container">
-    <div class="stocks-list">
-        <h1>List of Stocks</h1>
+<h1>{% block title %} FlaskShortener Statistics {% endblock %}</h1>
+<table class="table">
+    <thead>
+        <tr>
+            <th scope="col">#</th>
+            <th scope="col">Short</th>
+            <th scope="col">Original</th>
+            <th scope="col">Clicks</th>
+            <th scope="col">Creation Date</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for url in urls %}
+        <tr>
+            <th scope="row">{{ url['id'] }}</th>
+            <td>{{ url['short_url'] }}</td>
+            <td>{{ url['original_url'] }}</td>
+            <td>{{ url['clicks'] }}</td>
+            <td>{{ url['created'] }}</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
 
-        <table>
-            <!-- Table Header Row -->
-            <thead>
-                <tr>
-                    <th>Stock Symbol</th>
-                    <th>Number of Shares</th>
-                    <th>Purchase Price</th>
-                </tr>
-            </thead>
-
-            <!-- Table Elements (Rows) -->
-            {% for url in urls %}
-            <tr>
-                <td>{{ stock.stock_symbol }}</td>
-                <td>{{ stock.number_of_shares }}</td>
-                <td>${{ stock.purchase_price / 100 }}</td>
-            </tr>
-            {% endfor %}
-        </table>
-    </div>
-</div>
 {% endblock %}

@@ -7,7 +7,7 @@ from flask import current_app, render_template, request, session, flash, redirec
 from project.models import Url
 from project import db
 from urllib.parse import urlparse
-from flask_login import login_required
+from flask_login import login_required, current_user
 
 # from pydantic import BaseModel, validator, ValidationError
 
@@ -33,7 +33,7 @@ def shorten_url():
         if not check_url.scheme:
             url = "//" + url
 
-        new_url = Url(original_url=url)
+        new_url = Url(original_url=url, user_id=current_user.id)
         db.session.add(new_url)
         db.session.commit()
 
@@ -73,7 +73,7 @@ def url_redirect(id):
 @urls_blueprint.route('/stats')
 @login_required
 def stats():
-    urls = Url.query.order_by(Url.id).all()
+    urls = Url.query.order_by(Url.id).filter_by(user_id=current_user.id).all()
     return render_template('urls/stats.html', urls=urls)
 
     # db_urls = Url.query.order_by(Url.id).all()

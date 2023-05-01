@@ -13,6 +13,7 @@ class Url(db.Model):
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
     original_url = db.Column(db.String, nullable=False)
+    short_url = db.Column(db.String, nullable=True)
     clicks = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 

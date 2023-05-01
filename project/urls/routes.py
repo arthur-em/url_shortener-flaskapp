@@ -17,7 +17,7 @@ def index():
     return render_template('urls/index.html')
 
 
-@urls_blueprint.route("/shortern_url", methods=("GET", "POST"))
+@urls_blueprint.route("/shorten_url", methods=("GET", "POST"))
 @login_required
 def shorten_url():
     hashids = Hashids(min_length=4, salt=current_app.config['SECRET_KEY'])
@@ -27,7 +27,7 @@ def shorten_url():
 
         if not url:
             flash('The URL is required!')
-            return redirect(url_for('urls/index.html'))
+            return redirect(url_for('urls/shorten_url.html'))
 
         check_url = urlparse(url)
         if not check_url.scheme:
@@ -40,6 +40,9 @@ def shorten_url():
         url_id = new_url.id
         hashid = hashids.encode(url_id)
         short_url = request.host_url + hashid
+
+        new_url.short_url = short_url
+        db.session.commit()
 
         return render_template('urls/shorten_url.html', short_url=short_url)
 
@@ -71,4 +74,14 @@ def url_redirect(id):
 @login_required
 def stats():
     urls = Url.query.order_by(Url.id).all()
+    return render_template('urls/stats.html', urls=urls)
+
+    # db_urls = Url.query.order_by(Url.id).all()
+
+    # urls = []
+    # for url in db_urls:
+    #     url = dict(url)
+    #     url['short_url'] = request.host_url + hashids.encode(url['id'])
+    #     urls.append(url)
+
     return render_template('urls/stats.html', urls=urls)

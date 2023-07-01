@@ -12,8 +12,8 @@ class Url(db.Model):
 
     id = db.Column(db.Integer, primary_key=True, autoincrement=True)
     created = db.Column(db.DateTime, nullable=False, default=datetime.utcnow)
-    original_url = db.Column(db.String, nullable=False)
-    short_url = db.Column(db.String, nullable=True)
+    original_url = db.Column(db.String(2083), nullable=False)
+    short_url = db.Column(db.String(1000), nullable=True)
     clicks = db.Column(db.Integer, nullable=False, default=0)
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
 
@@ -32,7 +32,7 @@ class User(db.Model):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key=True)
-    email = db.Column(db.String, unique=True)
+    email = db.Column(db.String(200), unique=True)
     password_hashed = db.Column(db.String(128))
     urls = db.relationship('Url', backref='user', lazy='dynamic')
 

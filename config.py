@@ -19,7 +19,7 @@ class Config(object):
     # SQLALCHEMY_DATABASE_URI = os.getenv('DATABASE_URL',
     #                                     default=f"sqlite:///{os.path.join(BASEDIR, 'instance', 'app.db')}")
 
-    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://emmanuel:01020304@localhost/flask"
+    SQLALCHEMY_DATABASE_URI = "mysql+pymysql://emmanuel:url_2023@localhost/flask"
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     REMEMBER_COOKIE_DURATION = timedelta(days=14)

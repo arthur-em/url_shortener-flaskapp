@@ -6,7 +6,7 @@ from flask.logging import default_handler
 import os
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager
-
+from flask_migrate import Migrate
 
 #######################
 #### Configuration ####
@@ -16,6 +16,7 @@ from flask_login import LoginManager
 # but without any arguments passed in. These instances are not
 # attached to the Flask application at this point.
 db = SQLAlchemy()
+db_migration = Migrate()
 login = LoginManager()
 login.login_view = "users.login"
 
@@ -47,7 +48,7 @@ def initialize_extensions(app):
     # Since the application instance is now created, pass it to each Flask
     # extension instance to bind it to the Flask application instance (app)
     db.init_app(app)
-    # db_migration.init_app(app, db, render_as_batch=True)
+    db_migration.init_app(app, db)
     # csrf_protection.init_app(app)
     login.init_app(app)
     # mail.init_app(app)
